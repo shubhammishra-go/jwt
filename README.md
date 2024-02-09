@@ -297,7 +297,14 @@ type Parser struct {
 
 ```https://datatracker.ietf.org/doc/html/rfc7519```
 
-For Cookie based Authentication see these articles
+For `Header` based Authentication see these articles
+
+```https://www.bacancytechnology.com/blog/golang-jwt```
+
+```https://blog.logrocket.com/jwt-authentication-go/```
+
+
+For `Cookie` based Authentication see these articles
 
 ```https://www.sohamkamani.com/golang/jwt-authentication/```
 
