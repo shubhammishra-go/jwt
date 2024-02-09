@@ -22,7 +22,9 @@ A JSON Web Token consists of three parts which are separated using `.(dot)`
 for example: 
 `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyaWQiOiIxZGQ5MDEwYy00MzI4LTRoZjNiOWU2LTc3N2Q4NDhlOTM3NSIsImF1dGhvcml6ZWQiOmZhbHNlfQ.vI7thh64mzXp_WMKZIedaKR4AF4trbvOHEpm2d62qIQ`
 
-`Header` Identifies which algorithm is used to generate the signature. In the below example, HS256 indicates that this token is signed using HMAC-SHA256.
+# Header
+
+Header Identifies which algorithm is used to generate the signature. In the below example, HS256 indicates that this token is signed using HMAC-SHA256.
 
 Typical cryptographic algorithms used are HMAC with SHA-256 (HS256) and RSA signature with SHA-256 (RS256). JWA (JSON Web Algorithms) RFC 7518 introduces many more for both authentication and encryption.
 
@@ -57,7 +59,8 @@ A URL where the server can retrieve a certificate chain corresponding to the pri
 A list of headers that must be understood by the server in order to accept the token as valid 
 
 
-`Payload` Contains a set of claims. The JWT specification defines seven Registered Claim Names, which are the standard fields commonly included in tokens.[1] Custom claims are usually also included, depending on the purpose of the token.
+# Payload 
+Payload Contains a set of claims. The JWT specification defines seven Registered Claim Names, which are the standard fields commonly included in tokens.[1] Custom claims are usually also included, depending on the purpose of the token.
 This example has the standard Issued At Time claim (`iat`) and a custom claim (`loggedInAs`).
 
 
@@ -91,8 +94,9 @@ Identifies the time at which the JWT was issued. The value must be a NumericDate
 `jti (JWT ID)` 
 Case-sensitive unique identifier of the token even among different issuers. 
 
+# Signature
 
-`Signature` It is generated using the secret (provided by the user), encoded header, and payload.
+Signature It is generated using the secret (provided by the user), encoded header, and payload.
 To Securely validates the token. The signature is calculated by encoding the header and payload using Base64url Encoding RFC 4648 and concatenating the two together with a period separator. That string is then run through the cryptographic algorithm specified in the header. This example uses HMAC-SHA256 with a shared secret (public key algorithms are also defined). The Base64url Encoding is similar to base64, but uses different non-alphanumeric characters and omits padding.
 
 ```go
