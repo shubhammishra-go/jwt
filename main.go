@@ -17,26 +17,27 @@ type User struct {
 	Password string `json:"password"`
 }
 
+// make sure you login using username=chek  and password=123456
+
 func main() {
 
 	http.HandleFunc("/login", LoginHandler)
 	http.HandleFunc("/protected", ProtectedHandler)
 
-	fmt.Println("Starting the server")
-	err := http.ListenAndServe("localhost:4000", nil)
-	if err != nil {
-		fmt.Println("Could not start the server", err)
-	}
+	log.Fatal(http.ListenAndServe(":4000", nil))
 
 }
 
 var secretKey = []byte("secret-key")
 
 func createToken(username string) (string, error) {
+
+	// token will be valid only for 24 seconds from its creation
+
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256,
 		jwt.MapClaims{
 			"username": username,
-			"exp":      time.Now().Add(time.Hour * 24).Unix(),
+			"exp":      time.Now().Add(time.Second * 24).Unix(),
 		})
 
 	tokenString, err := token.SignedString(secretKey)
@@ -64,15 +65,18 @@ func verifyToken(tokenString string) error {
 }
 
 func ProtectedHandler(w http.ResponseWriter, r *http.Request) {
+
 	w.Header().Set("Content-Type", "application/json")
+
 	tokenString := r.Header.Get("Authorization")
-	log.Println("token string", tokenString)
+
+	log.Println("\nToken string", tokenString)
+
 	if tokenString == "" {
 		w.WriteHeader(http.StatusUnauthorized)
 		fmt.Fprint(w, "Missing authorization header")
 		return
 	}
-	tokenString = tokenString[len("Bearer "):]
 
 	err := verifyToken(tokenString)
 	if err != nil {
