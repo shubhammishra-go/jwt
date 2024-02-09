@@ -172,6 +172,11 @@ ss, err := token.SignedString(mySigningKey)
 fmt.Println(ss, err)
 ```
 
+# About token.SignedString(key interface{}) (string, error)
+
+SignedString creates and returns a complete, signed JWT. The token is signed using the SigningMethod specified in the token. Please refer to `https://golang-jwt.github.io/jwt/usage/signing_methods/#signing-methods-and-key-types` for an overview of the different signing methods and their respective key types. 
+
+
 # About SigningMethod
 SigningMethod is an interface it can be used to add new methods for signing or verifying tokens. It takes a decoded signature as an input in the Verify function and produces a signature in Sign. The signature is then usually base64 encoded as part of a JWT
 
